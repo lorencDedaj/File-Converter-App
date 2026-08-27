@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ConvertDesk</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Application summary">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" role="img">
+              <path d="M8 4h11l5 5v19H8z" />
+              <path d="M19 4v6h6" />
+              <path d="M12 17h8" />
+              <path d="M16 13v8" />
+            </svg>
+          </div>
+          <div>
+            <h1>ConvertDesk</h1>
+            <p>Local file conversion</p>
+          </div>
+        </div>
+
+        <nav class="mode-tabs" aria-label="Converter types">
+          <button class="tab-button active" data-mode="image" type="button">
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z" /><path d="m4 16 5-5 4 4 2-2 5 5" /><circle cx="15.5" cy="9.5" r="1.5" /></svg>
+            </span>
+            Images
+          </button>
+          <button class="tab-button" data-mode="document" type="button">
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z" /><path d="M15 3v4h4" /><path d="M9 12h6" /><path d="M9 16h6" /></svg>
+            </span>
+            Text
+          </button>
+          <button class="tab-button" data-mode="data" type="button">
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z" /><path d="M5 10h14" /><path d="M10 5v14" /></svg>
+            </span>
+            Data
+          </button>
+          <button class="tab-button" data-mode="base64" type="button">
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 8a4 4 0 0 1 4-4h2" /><path d="M16 16a4 4 0 0 1-4 4h-2" /><path d="M14 4h4v4" /><path d="M10 20H6v-4" /></svg>
+            </span>
+            Base64
+          </button>
+          <button class="tab-button" data-mode="files" type="button">
+            <span class="tab-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z" /><path d="M14 3v5h5" /><path d="M10 13h6" /><path d="M13 10l3 3-3 3" /></svg>
+            </span>
+            Files
+          </button>
+        </nav>
+
+        <div class="privacy-panel">
+          <span class="status-dot" aria-hidden="true"></span>
+          Files are processed in your browser.
+        </div>
+      </aside>
+
+      <section class="workspace" aria-live="polite">
+        <div class="workspace-header">
+          <div>
+            <p class="eyebrow">Converter</p>
+            <h2 id="modeTitle">Image converter</h2>
+          </div>
+          <button class="ghost-button" id="resetButton" type="button" title="Clear files and fields">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7" /><path d="M3 4v6h6" /></svg>
+            Reset
+          </button>
+        </div>
+
+        <section class="converter-panel" id="imagePanel" data-panel="image">
+          <div class="drop-zone" id="dropZone">
+            <input id="fileInput" type="file" accept="image/*,.txt,.md,.html,.json,.csv" />
+            <div class="drop-art" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <rect x="26" y="18" width="68" height="84" rx="8" />
+                <path d="M46 54h28" />
+                <path d="M60 40v28" />
+                <path d="M39 82h42" />
+              </svg>
+            </div>
+            <div>
+              <h3>Drop a file here</h3>
+              <p id="dropHint">PNG, JPG, GIF, BMP, or WebP</p>
+            </div>
+            <button class="primary-button" id="browseButton" type="button">Choose file</button>
+          </div>
+
+          <div class="tool-grid">
+            <div class="tool-card preview-card">
+              <div class="card-header">
+                <h3>Preview</h3>
+                <span id="fileMeta">No file loaded</span>
+              </div>
+              <div class="preview-stage" id="previewStage">
+                <p>Select a file to begin.</p>
+              </div>
+            </div>
+
+            <div class="tool-card settings-card">
+              <div class="card-header">
+                <h3>Output</h3>
+                <span id="conversionStatus">Ready</span>
+              </div>
+
+              <div class="control-group image-only">
+                <label for="imageFormat">Image format</label>
+                <select id="imageFormat">
+                  <option value="image/png">PNG</option>
+                  <option value="image/jpeg">JPEG</option>
+                  <option value="image/webp">WebP</option>
+                </select>
+              </div>
+
+              <div class="control-group image-only">
+                <label for="qualityRange">Quality <span id="qualityValue">92%</span></label>
+                <input id="qualityRange" type="range" min="10" max="100" value="92" />
+              </div>
+
+              <div class="control-group text-only hidden">
+                <label for="textFormat">Text format</label>
+                <select id="textFormat">
+                  <option value="txt">Plain text</option>
+                  <option value="html">HTML document</option>
+                  <option value="md">Markdown</option>
+                </select>
+              </div>
+
+              <div class="control-group data-only hidden">
+                <label for="dataFormat">Data format</label>
+                <select id="dataFormat">
+                  <option value="json">JSON</option>
+                  <option value="csv">CSV</option>
+                  <option value="txt">Plain text table</option>
+                </select>
+              </div>
+
+              <div class="control-group base64-only hidden">
+                <label for="base64Format">Base64 action</label>
+                <select id="base64Format">
+                  <option value="encode">Encode file</option>
+                  <option value="decode">Decode text</option>
+                </select>
+              </div>
+
+              <div class="control-group files-only hidden">
+                <label for="fileFormat">File extension</label>
+                <select id="fileFormat">
+                  <option value="pdf">PDF (.pdf)</option>
+                  <option value="docx">Word document (.docx)</option>
+                  <option value="txt">Plain text (.txt)</option>
+                  <option value="rtf">Rich text (.rtf)</option>
+                  <option value="epub">EPUB book (.epub)</option>
+                </select>
+              </div>
+
+              <button class="primary-button full-width" id="convertButton" type="button">Convert</button>
+              <a class="download-button disabled" id="downloadButton" href="#" download>Download</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="text-editor hidden" id="textEditor" aria-label="Text input">
+          <div class="editor-column">
+            <label for="textInput">Input</label>
+            <textarea id="textInput" spellcheck="false" placeholder="Paste text, Markdown, HTML, JSON, CSV, or Base64 here."></textarea>
+          </div>
+          <div class="editor-column">
+            <label for="textOutput">Output</label>
+            <textarea id="textOutput" spellcheck="false" readonly placeholder="Converted output appears here."></textarea>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

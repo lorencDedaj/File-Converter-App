@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | ConvertDesk</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="legal-page">
+      <article class="legal-document">
+        <a class="legal-back" href="/">Back to converter</a>
+        <h1>Contact</h1>
+        <p>For support, privacy questions, or conversion feedback, email <a href="mailto:support@convertdesk.app">support@convertdesk.app</a>.</p>
+
+        <h2>Send a Message</h2>
+        <form class="contact-form" action="mailto:support@convertdesk.app" method="post" enctype="text/plain">
+          <label>
+            Name
+            <input name="name" autocomplete="name" />
+          </label>
+          <label>
+            Email
+            <input name="email" type="email" autocomplete="email" />
+          </label>
+          <label>
+            Message
+            <textarea name="message" required></textarea>
+          </label>
+          <button class="primary-button" type="submit">Send email</button>
+        </form>
+      </article>
+    </main>
+  </body>
+</html>

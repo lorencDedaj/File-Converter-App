@@ -31,6 +31,7 @@ const state = {
   file: null,
   convertedUrl: null,
   convertedName: "",
+  downloadCleanupTimer: null,
 };
 
 const els = {
@@ -89,8 +90,10 @@ els.qualityRange.addEventListener("input", () => {
 });
 
 els.convertButton.addEventListener("click", convertCurrent);
+els.downloadButton.addEventListener("click", cleanupAfterDownload);
 els.resetButton.addEventListener("click", resetAll);
 els.base64Format.addEventListener("change", updateBase64Mode);
+window.addEventListener("beforeunload", revokeConvertedUrl);
 
 function setMode(mode) {
   state.mode = mode;
@@ -313,6 +316,7 @@ async function extractFileText(file) {
 }
 
 function makeDownload(blob, filename) {
+  revokeConvertedUrl();
   state.convertedUrl = URL.createObjectURL(blob);
   state.convertedName = filename;
   els.downloadButton.href = state.convertedUrl;
@@ -321,13 +325,37 @@ function makeDownload(blob, filename) {
 }
 
 function clearConversion() {
+  revokeConvertedUrl();
+  clearDownloadLink();
+  setStatus("Ready");
+}
+
+function cleanupAfterDownload(event) {
+  if (!state.convertedUrl || els.downloadButton.classList.contains("disabled")) {
+    event.preventDefault();
+    return;
+  }
+
+  window.clearTimeout(state.downloadCleanupTimer);
+  state.downloadCleanupTimer = window.setTimeout(() => {
+    revokeConvertedUrl();
+    clearDownloadLink();
+    setStatus("Downloaded and cleaned up");
+  }, 0);
+}
+
+function revokeConvertedUrl() {
+  window.clearTimeout(state.downloadCleanupTimer);
+  state.downloadCleanupTimer = null;
   if (state.convertedUrl) URL.revokeObjectURL(state.convertedUrl);
   state.convertedUrl = null;
   state.convertedName = "";
-  els.downloadButton.href = "#";
-  els.downloadButton.download = "";
+}
+
+function clearDownloadLink() {
+  els.downloadButton.removeAttribute("href");
+  els.downloadButton.removeAttribute("download");
   els.downloadButton.classList.add("disabled");
-  setStatus("Ready");
 }
 
 function resetAll() {

@@ -165,6 +165,24 @@ svg {
   background: rgba(255, 255, 255, 0.06);
 }
 
+.legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.legal-links a {
+  color: #c6d2cf;
+  font-size: 0.88rem;
+  text-decoration: none;
+}
+
+.legal-links a:hover,
+.legal-links a:focus-visible {
+  color: #fff;
+  text-decoration: underline;
+}
+
 .status-dot {
   width: 9px;
   height: 9px;
@@ -471,4 +489,68 @@ textarea {
   .ghost-button {
     width: 100%;
   }
+}
+
+.legal-page {
+  min-height: 100vh;
+  padding: 32px;
+  background: var(--bg);
+}
+
+.legal-document {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(24, 32, 38, 0.07);
+}
+
+.legal-document h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.legal-document h2 {
+  margin: 30px 0 10px;
+  font-size: 1.1rem;
+}
+
+.legal-document p,
+.legal-document li {
+  color: #3a464d;
+  line-height: 1.65;
+}
+
+.legal-document a {
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+.legal-back {
+  display: inline-flex;
+  margin-bottom: 24px;
+  color: var(--accent-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.contact-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.contact-form textarea {
+  min-height: 150px;
 }
